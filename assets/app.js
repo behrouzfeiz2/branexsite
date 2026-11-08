@@ -1,4 +1,35 @@
 // ============================================================================
+// ۰. کنترل منوی همبرگری در نسخه موبایل
+// ============================================================================
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const hamburgerIcon = document.getElementById('hamburger-icon');
+const closeMenuIcon = document.getElementById('close-menu-icon');
+
+if (mobileMenuBtn && mobileMenu) {
+  const toggleMobileMenu = (forceClose = false) => {
+    const isHidden = mobileMenu.classList.contains('hidden');
+    if (forceClose || !isHidden) {
+      mobileMenu.classList.add('hidden');
+      hamburgerIcon.classList.remove('hidden');
+      closeMenuIcon.classList.add('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    } else {
+      mobileMenu.classList.remove('hidden');
+      hamburgerIcon.classList.add('hidden');
+      closeMenuIcon.classList.remove('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
+    }
+  };
+
+  mobileMenuBtn.addEventListener('click', () => toggleMobileMenu());
+
+  document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+    link.addEventListener('click', () => toggleMobileMenu(true));
+  });
+}
+
+// ============================================================================
 // ۱. پس‌زمینه سه‌بعدی کهکشان و ستارگان (Three.js Starfield & Nebula)
 // ============================================================================
 const starCanvas = document.getElementById('starfield-canvas');
@@ -12,7 +43,7 @@ const renderer = new THREE.WebGLRenderer({ canvas: starCanvas, antialias: true, 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-const starCount = 4500;
+const starCount = window.innerWidth < 640 ? 2500 : 4500;
 const starGeo = new THREE.BufferGeometry();
 const positions = new Float32Array(starCount * 3);
 const colors = new Float32Array(starCount * 3);
@@ -251,9 +282,10 @@ window.addEventListener('resize', () => {
 });
 
 // ============================================================================
-// ۳. افکت سه‌بعدی کارت‌ها (3D Tilt Effect)
+// ۳. افکت سه‌بعدی کارت‌ها (3D Tilt Effect - فقط در دسکتاپ)
 // ============================================================================
 function initTiltCards() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
   const tiltCards = document.querySelectorAll('.tilt-card');
   tiltCards.forEach((card) => {
     card.addEventListener('mousemove', (e) => {
@@ -387,7 +419,6 @@ function renderCustomersGrid() {
   grid.innerHTML = cardsHtml + summaryCard;
 }
 
-// المان‌های مودال لاگین و پنل ادمین
 const loginModal = document.getElementById('login-modal');
 const closeLoginBtn = document.getElementById('close-login-btn');
 const adminLoginForm = document.getElementById('admin-login-form');
@@ -447,7 +478,6 @@ function renderAdminList() {
   });
 }
 
-// کلیک روی دکمه پنل ادمین -> بررسی لاگین بودن یا نمایش فرم ورود
 openAdminBtn.addEventListener('click', () => {
   if (isAdminAuthenticated) {
     renderAdminList();
@@ -465,7 +495,6 @@ closeLoginBtn.addEventListener('click', () => {
   loginModal.classList.remove('flex');
 });
 
-// ارسال فرم لاگین به Cloudflare Pages Function (/api/auth)
 adminLoginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const username = document.getElementById('admin-username').value.trim();
