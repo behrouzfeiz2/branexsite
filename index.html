@@ -446,14 +446,18 @@
                 </h2>
               </div>
               <div class="flex items-center gap-3 bg-slate-900/80 px-4 py-3 rounded-2xl border border-white/10 shrink-0 self-start sm:self-auto">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center text-slate-950 font-black text-lg">
-                  ب
-                </div>
-                <div>
-                  <div class="text-sm font-black text-white">بهروز فیض</div>
-                  <div class="text-xs text-cyan-400">مؤسس و مدیر فنی برانکس</div>
-                </div>
-              </div>
+  <!-- باکس تصویر پروفایل -->
+  <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 p-[2px] flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20">
+    <!-- عکس پروفایل (اگر لود نشود پنهان می‌شود) -->
+    <img src="assets/profile.png" alt="بهروز فیض" class="w-full h-full object-cover rounded-[10px]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+    <!-- فال‌بک حرف 'ب' (اگر عکس در دسترس نباشد این بخش فعال می‌شود) -->
+    <span style="display:none;" class="w-full h-full bg-gradient-to-tr from-indigo-500 to-cyan-400 rounded-[10px] items-center justify-center text-slate-950 font-black text-lg">ب</span>
+  </div>
+  <div>
+    <div class="text-sm sm:text-base font-black text-white">بهروز فیض</div>
+    <div class="text-[11px] sm:text-xs text-cyan-400 mt-0.5">مؤسس و مدیر فنی برانکس</div>
+  </div>
+</div>
             </div>
 
             <div class="space-y-4 sm:space-y-5 text-slate-200/95 text-sm sm:text-lg leading-8 sm:leading-9 font-normal text-justify">
