@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سئو فنی و محتوایی | برانکس</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { vazir: ['Vazirmatn', 'sans-serif'] }, colors: { space: { 950: '#03040b', 900: '#070a18', 800: '#0e1530' } } } }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body class="font-vazir selection:bg-indigo-500 selection:text-white">
+
+  <!-- پس‌زمینه سه‌بعدی فضا -->
+  <canvas id="starfield-canvas"></canvas>
+
+  <!-- هدر -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-slate-950/75 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 sm:gap-3.5 group shrink-0">
+        <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-indigo-600/30 via-purple-600/30 to-cyan-400/30 p-0.5 shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform overflow-hidden border border-white/15 flex items-center justify-center">
+          <img src="assets/logo.png" alt="برانکس" class="w-full h-full object-contain rounded-[14px]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <span style="display:none;" class="font-black text-xl text-transparent bg-clip-text bg-gradient-to-tr from-indigo-400 to-cyan-300">B</span>
+        </div>
+        <div>
+          <span class="text-base sm:text-2xl font-black tracking-tight text-white block">برانکس | Branex</span>
+          <span class="text-[11px] sm:text-xs text-cyan-400 block font-medium">طراحی و توسعه نرم افزار</span>
+        </div>
+      </a>
+      <nav class="hidden lg:flex items-center gap-5 xl:gap-7 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-cyan-400 transition-colors whitespace-nowrap">خانه</a>
+        <a href="index.html#services" class="text-cyan-400 transition-colors whitespace-nowrap">خدمات ما</a>
+        <a href="index.html#products" class="hover:text-cyan-400 transition-colors whitespace-nowrap">محصولات</a>
+        <a href="index.html#about" class="hover:text-cyan-400 transition-colors whitespace-nowrap">درباره ما</a>
+        <a href="index.html#contact" class="hover:text-cyan-400 transition-colors whitespace-nowrap">تماس با ما</a>
+      </nav>
+      <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        <button id="warp-btn" class="px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-white/5 hover:bg-white/15 border border-cyan-400/30 text-cyan-300 flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer whitespace-nowrap"><span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0"></span><span>سفر نوری ساده</span></button>
+        <a href="index.html#contact" class="hidden sm:inline-flex px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white shadow-lg transition-all whitespace-nowrap">شروع پروژه</a>
+        <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 shrink-0 rounded-xl bg-white/5 border border-white/15 flex items-center justify-center text-white"><svg id="hamburger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg><svg id="close-menu-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="lg:hidden hidden border-t border-white/10 bg-slate-950/95 px-4 pt-3 pb-6 space-y-2">
+      <a href="index.html" class="mobile-nav-link block px-4 py-3 rounded-xl text-sm font-bold text-slate-200">خانه</a>
+      <a href="index.html#contact" class="block w-full text-center py-3 rounded-xl text-sm font-bold bg-gradient-to-r from-indigo-600 to-cyan-500 text-white">شروع پروژه</a>
+    </div>
+  </header>
+
+<main class="content-wrapper pt-24 pb-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="glass-panel rounded-3xl p-8 md:p-12 border border-emerald-500/30 text-center relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <h1 class="text-3xl md:text-5xl font-black text-white mb-4">خدمات <span class="text-gradient">سئو و بهینه‌سازی</span></h1>
+        <p class="text-slate-300 md:text-lg max-w-2xl mx-auto leading-relaxed">رسیدن به صدر نتایج گوگل با استراتژی‌های استاندارد؛ ترکیبی از قدرت تکنیکال وب‌سایت و غنای محتوایی.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-panel rounded-2xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-2xl mb-4">⚙️</div>
+          <h3 class="text-xl font-bold text-white mb-2">سئو تکنیکال (Technical)</h3>
+          <p class="text-sm text-slate-400 leading-loose">بررسی و اصلاح ساختار کدهای سایت، رفع خطاهای 404، پیاده‌سازی صحیح اسکیما مارک‌آپ‌ها (Schema Markup) و ایجاد نقشه سایت اصولی برای خزنده‌های گوگل.</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-2xl mb-4">🚀</div>
+          <h3 class="text-xl font-bold text-white mb-2">بهینه‌سازی سرعت (PageSpeed)</h3>
+          <p class="text-sm text-slate-400 leading-loose">کسب نمرات عالی در ابزارهای Google PageSpeed Insights و GTmetrix با فشرده‌سازی سورس‌ها، بهینه‌سازی تصاویر (WebP) و پیاده‌سازی کشینگ (Caching).</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-2xl mb-4">✍️</div>
+          <h3 class="text-xl font-bold text-white mb-2">سئو محتوایی و کیورد تارگتینگ</h3>
+          <p class="text-sm text-slate-400 leading-loose">تحقیق دقیق کلمات کلیدی، تدوین استراتژی محتوایی، تولید مقالات و صفحات لندینگ سئوشده، و لینک‌سازی داخلی قدرتمند برای کسب اتوریتی محتوایی.</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-6 border border-white/10 hover:border-emerald-500/40 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-2xl mb-4">📈</div>
+          <h3 class="text-xl font-bold text-white mb-2">تحلیل Search Console</h3>
+          <p class="text-sm text-slate-400 leading-loose">اتصال و رصد مداوم وضعیت سایت در گوگل سرچ کنسول، رفع ارورهای ایندکسینگ، بهبود نرخ کلیک (CTR) و رصد رفتار کاربر در وب‌سایت.</p>
+        </div>
+      </div>
+      <div class="text-center pt-8">
+        <a href="index.html#contact" class="inline-flex px-8 py-3.5 rounded-2xl font-bold text-sm bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-lg shadow-indigo-500/25">ارزیابی وضعیت سئو وب‌سایت من</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- فوتر -->
+  <footer class="relative z-10 border-t border-white/10 bg-slate-950/90 backdrop-blur-xl py-10 sm:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-right">
+        <div class="flex flex-col sm:flex-row items-center gap-3.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 p-0.5 flex items-center overflow-hidden shrink-0"><img src="assets/logo.png" alt="برانکس" class="w-full h-full object-contain rounded-[10px]" onerror="this.style.display='none';" /></div>
+          <div>
+            <span class="font-extrabold text-white text-base block">برانکس | Branex</span>
+            <span class="text-xs text-slate-400 block mt-0.5">طراحی و توسعه نرم افزار • موفقیت شما در فضای مجازی از اینجا شروع می شود ...</span>
+          </div>
+        </div>
+        <div class="text-xs text-slate-400 text-center md:text-left space-y-1">
+          <div>طراحی و توسعه توسط <a href="https://branex.ir" class="text-cyan-400 font-extrabold hover:underline">برانکس</a></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
