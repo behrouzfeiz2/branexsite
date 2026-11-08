@@ -148,7 +148,7 @@ let pRenderer;
 if (planetContainer) {
   const pScene = new THREE.Scene();
   const pCamera = new THREE.PerspectiveCamera(45, planetContainer.clientWidth / planetContainer.clientHeight, 0.1, 1000);
-  pCamera.position.z = 5.5;
+  pCamera.position.z = 6.5;
 
   pRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   pRenderer.setSize(planetContainer.clientWidth, planetContainer.clientHeight);
