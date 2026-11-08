@@ -2,6 +2,8 @@
 /home                      /                        301
 /social-media-management   /content-creation.html   301
 /web-develop               /web-design.html         301
+/seo                       /seo-services.html       301
+
 
 # هدایت تمام خطاهای 404 به صفحه سفارشی
 /*                         /404.html                404
