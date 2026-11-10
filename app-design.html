@@ -4,6 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>طراحی اپلیکیشن | برانکس</title>
+  <meta name="description" content="طراحی و توسعه اپلیکیشن موبایل و نرم‌افزار اختصاصی با تمرکز بر تجربه کاربری، عملکرد و نیازهای کسب‌وکار توسط تیم برانکس." />
+  <link rel="canonical" href="https://branex.ir/app-design.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#070a18" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fa_IR" />
+  <meta property="og:site_name" content="برانکس | Branex" />
+  <meta property="og:title" content="طراحی اپلیکیشن | برانکس" />
+  <meta property="og:description" content="طراحی و توسعه اپلیکیشن موبایل و نرم‌افزار اختصاصی با تمرکز بر تجربه کاربری، عملکرد و نیازهای کسب‌وکار توسط تیم برانکس." />
+  <meta property="og:url" content="https://branex.ir/app-design.html" />
+  <meta property="og:image" content="https://branex.ir/assets/logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="طراحی اپلیکیشن | برانکس" />
+  <meta name="twitter:description" content="طراحی و توسعه اپلیکیشن موبایل و نرم‌افزار اختصاصی با تمرکز بر تجربه کاربری، عملکرد و نیازهای کسب‌وکار توسط تیم برانکس." />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +32,7 @@
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body class="font-vazir selection:bg-indigo-500 selection:text-white">
+  <a href="#main-content" class="skip-link">پرش به محتوای اصلی</a>
 
   <!-- پس‌زمینه سه‌بعدی فضا -->
   <canvas id="starfield-canvas"></canvas>
@@ -27,7 +42,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2.5 sm:gap-3.5 group shrink-0">
         <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-indigo-600/30 via-purple-600/30 to-cyan-400/30 p-0.5 shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform overflow-hidden border border-white/15 flex items-center justify-center">
-          <img src="assets/logo.png" alt="برانکس" class="w-full h-full object-contain rounded-[14px]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <img src="assets/logo.png" width="48" height="48" decoding="async" fetchpriority="high" alt="برانکس" class="w-full h-full object-contain rounded-[14px]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"  />
           <span style="display:none;" class="font-black text-xl text-transparent bg-clip-text bg-gradient-to-tr from-indigo-400 to-cyan-300">B</span>
         </div>
         <div>
@@ -35,16 +50,18 @@
           <span class="text-[11px] sm:text-xs text-cyan-400 block font-medium">طراحی و توسعه نرم افزار</span>
         </div>
       </a>
-      <nav class="hidden lg:flex items-center gap-5 xl:gap-7 text-sm font-medium text-slate-300">
+      <nav aria-label="منوی اصلی" class="hidden lg:flex items-center gap-5 xl:gap-7 text-sm font-medium text-slate-300">
         <a href="index.html" class="hover:text-cyan-400 transition-colors whitespace-nowrap">خانه</a>
         <a href="index.html#services" class="text-cyan-400 transition-colors whitespace-nowrap">خدمات ما</a>
         <a href="index.html#products" class="hover:text-cyan-400 transition-colors whitespace-nowrap">محصولات</a>
         <a href="index.html#about" class="hover:text-cyan-400 transition-colors whitespace-nowrap">درباره ما</a>
         <a href="index.html#contact" class="hover:text-cyan-400 transition-colors whitespace-nowrap">تماس با ما</a>
+        <a href="https://blog.branex.ir/" class="hover:text-cyan-400 transition-colors whitespace-nowrap" aria-label="وبلاگ برانکس">وبلاگ</a>
       </nav>
       <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
         <button id="warp-btn" class="px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-white/5 hover:bg-white/15 border border-cyan-400/30 text-cyan-300 flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer whitespace-nowrap"><span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0"></span><span>سفر نوری ساده</span></button>
-        <a href="index.html#contact" class="hidden sm:inline-flex px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white shadow-lg transition-all whitespace-nowrap">شروع پروژه</a>
+        <a href="https://blog.branex.ir/" class="mobile-nav-link block px-4 py-3 rounded-xl text-sm font-bold text-cyan-300" aria-label="وبلاگ برانکس">وبلاگ برانکس</a>
+      <a href="index.html#contact" class="hidden sm:inline-flex px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white shadow-lg transition-all whitespace-nowrap">شروع پروژه</a>
         <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 shrink-0 rounded-xl bg-white/5 border border-white/15 flex items-center justify-center text-white"><svg id="hamburger-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg><svg id="close-menu-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
       </div>
     </div>
@@ -54,7 +71,7 @@
     </div>
   </header>
 
-<main class="content-wrapper pt-24 pb-16">
+<main id="main-content" class="content-wrapper pt-24 pb-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       <div class="glass-panel rounded-3xl p-8 md:p-12 border border-cyan-500/30 text-center relative overflow-hidden">
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -94,7 +111,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-right">
         <div class="flex flex-col sm:flex-row items-center gap-3.5">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 p-0.5 flex items-center overflow-hidden shrink-0"><img src="assets/logo.png" alt="برانکس" class="w-full h-full object-contain rounded-[10px]" onerror="this.style.display='none';" /></div>
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 p-0.5 flex items-center overflow-hidden shrink-0"><img src="assets/logo.png" width="48" height="48" decoding="async" fetchpriority="high" alt="برانکس" class="w-full h-full object-contain rounded-[10px]" onerror="this.style.display='none';"  /></div>
           <div>
             <span class="font-extrabold text-white text-base block">برانکس | Branex</span>
             <span class="text-xs text-slate-400 block mt-0.5">طراحی و توسعه نرم افزار • موفقیت شما در فضای مجازی از اینجا شروع می شود ...</span>
