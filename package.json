@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node build.js"
+    "build": "tailwindcss -c tailwind.config.js -i ./assets/tailwind.input.css -o ./assets/tailwind.min.css --minify && node build.js"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
   }
 }

@@ -127,3 +127,10 @@ body {
   height: 100%;
   object-fit: contain;
 }
+
+
+/* Accessibility and reduced-motion preferences */
+.skip-link{position:fixed;top:8px;right:8px;z-index:10000;padding:12px 18px;border-radius:10px;background:#fff;color:#070a18;font-weight:700;transform:translateY(-160%);transition:transform .2s ease}
+.skip-link:focus{transform:translateY(0)}
+:focus-visible{outline:3px solid #22d3ee;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
