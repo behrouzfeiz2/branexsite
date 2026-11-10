@@ -47,10 +47,20 @@
   </script>
 
   <!-- Three.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <!-- استایل اختصاصی -->
   <link rel="stylesheet" href="assets/style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "برانکس | Branex",
+    "url": "https://branex.ir/",
+    "logo": "https://branex.ir/assets/logo.png",
+    "description": "تیم طراحی و توسعه نرم‌افزار، وب‌سایت، اپلیکیشن، سئو و تولید محتوا."
+  }
+  </script>
 </head>
 <body class="font-vazir selection:bg-indigo-500 selection:text-white">
   <a href="#main-content" class="skip-link">پرش به محتوای اصلی</a>
@@ -99,7 +109,7 @@
         </a>
 
         <!-- دکمه منوی همبرگری (تغییر از md به lg) -->
-        <button id="mobile-menu-btn" aria-label="منوی موبایل" aria-expanded="false" class="lg:hidden w-10 h-10 shrink-0 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/15 hover:border-cyan-500/50 flex items-center justify-center text-white transition-all cursor-pointer">
+        <button id="mobile-menu-btn" aria-label="منوی موبایل" aria-controls="mobile-menu" aria-expanded="false" class="lg:hidden w-10 h-10 shrink-0 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/15 hover:border-cyan-500/50 flex items-center justify-center text-white transition-all cursor-pointer">
           <!-- آیکون سه خط همبرگری -->
           <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -853,6 +863,6 @@
   </footer>
 
   <!-- اسکریپت اصلی سایت -->
-  <script src="assets/app.js"></script>
+  <script defer src="assets/app.js"></script>
 </body>
 </html>
