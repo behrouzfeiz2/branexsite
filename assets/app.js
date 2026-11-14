@@ -316,8 +316,9 @@ initTiltCards();
 // ============================================================================
 // ۴. مدیریت خودکار پوشه customers/ و پنل ادمین محافظت‌شده
 // ============================================================================
-const STORAGE_KEY = 'branex_customers_manifest_v2';
-let isAdminAuthenticated = false;
+// ============================================================================
+// ۴. بارگذاری خودکار اطلاعات مشتریان از customers/manifest.json
+// ============================================================================
 
 let customersData = [];
 
@@ -326,43 +327,31 @@ function extractNameFromFilename(filename) {
 }
 
 async function loadCustomers() {
-  const savedLocal = localStorage.getItem(STORAGE_KEY);
-  if (savedLocal) {
-    try {
-      customersData = JSON.parse(savedLocal);
-      renderCustomersGrid();
-      return;
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   try {
     const res = await fetch('customers/manifest.json', { cache: 'no-store' });
     if (res.ok) {
       const manifest = await res.json();
-      if (Array.isArray(manifest) && manifest.length > 0) {
-        customersData = manifest.map((item) => {
-          if (typeof item === 'string') {
+      if (Array.isArray(manifest)) {
+        customersData = manifest
+          .filter((item) => item && (typeof item === 'string' || typeof item.file === 'string'))
+          .map((item) => {
+            if (typeof item === 'string') {
+              return {
+                file: item,
+                name: extractNameFromFilename(item),
+                description: 'طراحی، توسعه و پشتیبانی فنی توسط برانکس'
+              };
+            }
             return {
-              file: item,
-              name: extractNameFromFilename(item),
-              description: 'طراحی، توسعه و پشتیبانی فنی توسط برانکس'
+              file: item.file,
+              name: item.name || extractNameFromFilename(item.file),
+              description: item.description || 'طراحی، توسعه و پشتیبانی فنی توسط برانکس'
             };
-          }
-          return {
-            file: item.file,
-            name: item.name || extractNameFromFilename(item.file),
-            description: item.description || 'طراحی، توسعه و پشتیبانی فنی توسط برانکس'
-          };
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(customersData));
-        renderCustomersGrid();
-        return;
+          });
       }
     }
   } catch (err) {
-    // خطا در بارگذاری manifest
+    console.error('خطا در بارگذاری customers/manifest.json:', err);
   }
 
   renderCustomersGrid();
@@ -406,191 +395,6 @@ function renderCustomersGrid() {
   `;
 
   grid.innerHTML = cardsHtml + summaryCard;
-}
-
-const loginModal = document.getElementById('login-modal');
-const closeLoginBtn = document.getElementById('close-login-btn');
-const adminLoginForm = document.getElementById('admin-login-form');
-const loginErrorMsg = document.getElementById('login-error-msg');
-const loginSubmitBtn = document.getElementById('login-submit-btn');
-
-const adminModal = document.getElementById('admin-modal');
-const openAdminBtn = document.getElementById('open-admin-btn');
-const closeAdminBtn = document.getElementById('close-admin-btn');
-const saveAdminBtn = document.getElementById('save-admin-btn');
-const adminList = document.getElementById('admin-customers-list');
-const addCustomerBtn = document.getElementById('add-customer-btn');
-const exportManifestBtn = document.getElementById('export-manifest-btn');
-
-function renderAdminList() {
-  if (!adminList) return;
-  adminList.innerHTML = customersData.map((cust, idx) => `
-    <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3.5 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-      <div class="sm:col-span-3 flex items-center gap-2.5">
-        <div class="w-12 h-12 rounded-xl bg-white border border-white/10 flex items-center justify-center p-1.5 shrink-0 overflow-hidden">
-          <img src="customers/${cust.file}" alt="${cust.name}" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <span style="display:none;" class="text-xs font-bold text-slate-900">🖼️</span>
-        </div>
-        <div class="min-w-0">
-          <div class="text-xs font-bold text-white truncate" dir="ltr">${cust.file}</div>
-          <div class="text-[10px] text-slate-400">customers/${cust.file}</div>
-        </div>
-      </div>
-      <div class="sm:col-span-3">
-        <input type="text" data-idx="${idx}" data-field="name" value="${cust.name || ''}" placeholder="نام برند" class="admin-input w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white text-xs focus:outline-none focus:border-cyan-400" />
-      </div>
-      <div class="sm:col-span-5">
-        <input type="text" data-idx="${idx}" data-field="description" value="${cust.description || ''}" placeholder="توضیح فعالیت برند..." class="admin-input w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 text-white text-xs focus:outline-none focus:border-cyan-400" />
-      </div>
-      <div class="sm:col-span-1 flex justify-end">
-        <button data-remove="${idx}" class="remove-cust-btn p-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 text-rose-400 text-xs transition-colors cursor-pointer" title="حذف">
-          🗑️
-        </button>
-      </div>
-    </div>
-  `).join('');
-
-  document.querySelectorAll('.admin-input').forEach((inp) => {
-    inp.addEventListener('input', (e) => {
-      const i = parseInt(e.target.getAttribute('data-idx'), 10);
-      const field = e.target.getAttribute('data-field');
-      customersData[i][field] = e.target.value;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(customersData));
-      renderCustomersGrid();
-    });
-  });
-
-  document.querySelectorAll('.remove-cust-btn').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      const i = parseInt(e.currentTarget.getAttribute('data-remove'), 10);
-      customersData.splice(i, 1);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(customersData));
-      renderAdminList();
-      renderCustomersGrid();
-    });
-  });
-}
-
-if (openAdminBtn) {
-  openAdminBtn.addEventListener('click', () => {
-    if (isAdminAuthenticated) {
-      renderAdminList();
-      adminModal.classList.remove('hidden');
-      adminModal.classList.add('flex');
-    } else {
-      if (loginErrorMsg) loginErrorMsg.classList.add('hidden');
-      loginModal.classList.remove('hidden');
-      loginModal.classList.add('flex');
-    }
-  });
-}
-
-if (closeLoginBtn) {
-  closeLoginBtn.addEventListener('click', () => {
-    loginModal.classList.add('hidden');
-    loginModal.classList.remove('flex');
-  });
-}
-
-if (adminLoginForm) {
-  adminLoginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('admin-username').value.trim();
-    const password = document.getElementById('admin-password').value;
-
-    if (loginErrorMsg) loginErrorMsg.classList.add('hidden');
-    if (loginSubmitBtn) {
-      loginSubmitBtn.disabled = true;
-      loginSubmitBtn.textContent = 'در حال بررسی اعتبار در Cloudflare...';
-    }
-
-    try {
-      const response = await fetch('/api/auth', {
-        method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.ok) {
-        isAdminAuthenticated = true;
-        loginModal.classList.add('hidden');
-        loginModal.classList.remove('flex');
-        renderAdminList();
-        adminModal.classList.remove('hidden');
-        adminModal.classList.add('flex');
-      } else {
-        if (loginErrorMsg) {
-          loginErrorMsg.textContent = result.error || 'نام کاربری یا رمز عبور اشتباه است.';
-          loginErrorMsg.classList.remove('hidden');
-        }
-      }
-    } catch (err) {
-      if (loginErrorMsg) {
-        loginErrorMsg.textContent = 'خطا در ارتباط با سرور احراز هویت (/api/auth).';
-        loginErrorMsg.classList.remove('hidden');
-      }
-    } finally {
-      if (loginSubmitBtn) {
-        loginSubmitBtn.disabled = false;
-        loginSubmitBtn.textContent = 'ورود به داشبورد مدیریت برندها';
-      }
-    }
-  });
-}
-
-const closeAdmin = () => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(customersData));
-  renderCustomersGrid();
-  if (adminModal) {
-    adminModal.classList.add('hidden');
-    adminModal.classList.remove('flex');
-  }
-};
-
-if (closeAdminBtn) closeAdminBtn.addEventListener('click', closeAdmin);
-if (saveAdminBtn) saveAdminBtn.addEventListener('click', closeAdmin);
-
-if (addCustomerBtn) {
-  addCustomerBtn.addEventListener('click', () => {
-    const fileInp = document.getElementById('new-customer-file');
-    const nameInp = document.getElementById('new-customer-name');
-    const descInp = document.getElementById('new-customer-desc');
-
-    const fileVal = fileInp.value.trim();
-    if (!fileVal) return;
-
-    const finalName = nameInp.value.trim() || extractNameFromFilename(fileVal);
-    const finalDesc = descInp.value.trim() || 'همراه خانواده برانکس';
-
-    customersData.push({
-      file: fileVal,
-      name: finalName,
-      description: finalDesc
-    });
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(customersData));
-
-    fileInp.value = '';
-    nameInp.value = '';
-    descInp.value = '';
-
-    renderAdminList();
-    renderCustomersGrid();
-  });
-}
-
-if (exportManifestBtn) {
-  exportManifestBtn.addEventListener('click', () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customersData, null, 2));
-    const dlAnchor = document.createElement('a');
-    dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', 'manifest.json');
-    document.body.appendChild(dlAnchor);
-    dlAnchor.click();
-    dlAnchor.remove();
-  });
 }
 
 loadCustomers();

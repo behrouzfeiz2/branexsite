@@ -575,12 +575,7 @@
             </div>
 
             <!-- دکمه ورود به پنل ادمین با افکت هاور -->
-            <button id="open-admin-btn" class="w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 hover:shadow-[0_0_10px_rgba(99,102,241,0.3)] flex items-center gap-2 transition-all shrink-0 cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-              <span>پنل مدیریت برندها (ویژه ادمین)</span>
-            </button>
+            
           </div>
 
           <!-- گرید نمایش داینامیک مشتریان -->
@@ -798,87 +793,6 @@
     </section>
 
   </main>
-
-  <!-- مودال ۱: ورود به پنل ادمین (احراز هویت متصل به متغیرهای Cloudflare Pages) -->
-  <div id="login-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
-    <div class="glass-panel rounded-3xl max-w-md w-full p-6 sm:p-7 border border-indigo-500/40 shadow-[0_0_30px_rgba(99,102,241,0.2)] space-y-6">
-      <div class="flex items-center justify-between border-b border-white/10 pb-4">
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-400">
-            🔒
-          </div>
-          <div>
-            <h3 class="text-base sm:text-lg font-black text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">ورود به پنل ادمین برانکس</h3>
-            <p class="text-[11px] text-slate-400">احراز هویت از طریق متغیرهای محیطی Cloudflare Pages</p>
-          </div>
-        </div>
-        <button id="close-login-btn" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 hover:text-white text-slate-300 cursor-pointer transition-colors">✕</button>
-      </div>
-
-      <form id="admin-login-form" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">نام کاربری ادمین (ADMIN_USER)</label>
-          <input type="text" id="admin-username" required class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-white text-sm focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(56,189,248,0.2)] transition-all" dir="ltr" placeholder="Username" />
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">رمز عبور ادمین (ADMIN_PASS)</label>
-          <input type="password" id="admin-password" required class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-white/15 text-white text-sm focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(56,189,248,0.2)] transition-all" dir="ltr" placeholder="••••••••" />
-        </div>
-        <div id="login-error-msg" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-xl p-3 shadow-[0_0_10px_rgba(244,63,94,0.1)]"></div>
-        <button type="submit" id="login-submit-btn" class="w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white shadow-[0_0_15px_rgba(56,189,248,0.4)] transition-all cursor-pointer">
-          ورود به داشبورد مدیریت برندها
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- مودال ۲: داشبورد مدیریت برندها و پوشه customers -->
-  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
-    <div class="glass-panel rounded-3xl max-w-3xl w-full p-5 sm:p-8 border border-indigo-500/40 shadow-[0_0_30px_rgba(99,102,241,0.2)] max-h-[90vh] flex flex-col">
-      
-      <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-5">
-        <div>
-          <h3 class="text-lg sm:text-xl font-black text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">داشبورد مدیریت مشتریان (پوشه customers/)</h3>
-          <p class="text-xs text-slate-400 mt-1">تصاویر داخل پوشه <code class="text-cyan-300 drop-shadow-[0_0_5px_rgba(56,189,248,0.5)]">customers/</code> گیت‌هاب را مدیریت و برای هر کدام توضیح ثبت کنید</p>
-        </div>
-        <button id="close-admin-btn" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 hover:text-white text-slate-300 cursor-pointer transition-colors">✕</button>
-      </div>
-
-      <!-- افزودن فایل جدید از پوشه customers -->
-      <div class="bg-slate-900/80 rounded-2xl p-4 border border-white/10 mb-5">
-        <div class="text-xs font-bold text-cyan-400 mb-3 drop-shadow-[0_0_5px_rgba(56,189,248,0.3)]">افزودن فایل تصویر جدید از پوشه customers/</div>
-        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-          <input id="new-customer-file" type="text" placeholder="نام فایل در پوشه customers (مثلاً: gando.png)" class="sm:col-span-4 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-white text-xs focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(56,189,248,0.2)] transition-all" dir="ltr" />
-          <input id="new-customer-name" type="text" placeholder="نام برند (اختیاری - پیش‌فرض نام فایل)" class="sm:col-span-3 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-white text-xs focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(56,189,248,0.2)] transition-all" />
-          <input id="new-customer-desc" type="text" placeholder="توضیح فعالیت و همکاری..." class="sm:col-span-3 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-white text-xs focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_10px_rgba(56,189,248,0.2)] transition-all" />
-          <button id="add-customer-btn" class="sm:col-span-2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-[0_0_10px_rgba(99,102,241,0.4)] transition-all cursor-pointer">
-            + افزودن
-          </button>
-        </div>
-      </div>
-
-      <!-- لیست مشتریان فعلی و ویرایش توضیحات -->
-      <div id="admin-customers-list" class="space-y-3 overflow-y-auto pr-1 flex-1 custom-scrollbar">
-        <!-- ردیف‌های ویرایش مشتریان توسط app.js ساخته می‌شوند -->
-      </div>
-
-      <!-- فوتر داشبورد و خروجی manifest.json -->
-      <div class="border-t border-white/10 pt-4 mt-5 flex flex-wrap items-center justify-between gap-3">
-        <div class="text-xs text-slate-400">
-          برای ذخیره دائمی در گیت‌هاب، فایل <code class="text-cyan-300 drop-shadow-[0_0_5px_rgba(56,189,248,0.5)]">manifest.json</code> را دانلود و در پوشه <code class="text-cyan-300 drop-shadow-[0_0_5px_rgba(56,189,248,0.5)]">customers/</code> قرار دهید.
-        </div>
-        <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
-          <button id="export-manifest-btn" class="px-4 py-2.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 hover:shadow-[0_0_10px_rgba(56,189,248,0.2)] text-xs font-bold transition-all cursor-pointer">
-            دانلود فایل manifest.json
-          </button>
-          <button id="save-admin-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 text-white text-xs font-bold shadow-[0_0_15px_rgba(99,102,241,0.4)] hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all cursor-pointer">
-            ذخیره و بستن
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
 
   <!-- فوتر (بدون منوی پایین صفحه در موبایل و دسکتاپ) -->
   <footer class="relative z-10 border-t border-white/10 bg-slate-950/90 backdrop-blur-xl py-10 sm:py-12">
